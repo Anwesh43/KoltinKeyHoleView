@@ -38,6 +38,7 @@ class KeyHoleView(ctx : Context) : View(ctx) {
             if (deg > Math.PI) {
                 deg = 0.0
                 scale = 0f
+                dir = 0f
                 stopcb()
             }
         }
@@ -82,19 +83,21 @@ class KeyHoleView(ctx : Context) : View(ctx) {
     data class KeyHole (var i : Int, val state : State = State()) {
 
         fun draw(canvas : Canvas, paint : Paint) {
+            val deg : Int = 5
             val w : Float = canvas.width.toFloat()
             val h : Float = canvas.height.toFloat()
             val r : Float = Math.min(w, h)/3
             val path : Path = Path()
-            val x : Float = r * Math.cos(250 * Math.PI/180).toFloat()
-            val y : Float = r * Math.sin(290 * Math.PI/180).toFloat()
+            val x : Float = r * Math.cos((270f - deg) * Math.PI/180).toFloat()
+            val y : Float = r * Math.sin((270f + deg) * Math.PI/180).toFloat()
             canvas.save()
             canvas.translate(w/2, h/2)
+            canvas.rotate(120f * state.scale)
             path.moveTo(x, y)
             path.lineTo(x, 0f)
             path.lineTo(-x, 0f)
             path.lineTo(-x, y)
-            for (i in -70..250) {
+            for (i in (deg - 90)..(270 - deg)) {
                 val a : Float = r * Math.cos(i * Math.PI/180).toFloat()
                 val b : Float = r * Math.sin(i * Math.PI/180).toFloat()
                 path.lineTo(a, b)
