@@ -26,4 +26,25 @@ class KeyHoleView(ctx : Context) : View(ctx) {
         }
         return true
     }
+
+    data class State(var scale : Float = 0f, var dir : Float = 0f, var deg : Double = 0.0) {
+
+        fun update(stopcb : () -> Unit) {
+            deg += (Math.PI/20) * dir
+            scale = Math.sin(deg).toFloat()
+            if (deg > Math.PI) {
+                deg = 0.0
+                scale = 0f
+                stopcb()
+            }
+        }
+
+        fun startUpdating(startcb : () -> Unit) {
+            if (dir == 0f) {
+                dir = 1f
+                startcb()
+            }
+        }
+    }
+
 }
