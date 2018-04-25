@@ -4,6 +4,7 @@ package ui.anwesome.com.keyholeview
  * Created by anweshmishra on 25/04/18.
  */
 
+import android.app.Activity
 import android.graphics.*
 import android.content.Context
 import android.view.View
@@ -132,6 +133,14 @@ class KeyHoleView(ctx : Context) : View(ctx) {
             keyHole.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+        fun create(activity : Activity) : KeyHoleView {
+            val view : KeyHoleView = KeyHoleView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
