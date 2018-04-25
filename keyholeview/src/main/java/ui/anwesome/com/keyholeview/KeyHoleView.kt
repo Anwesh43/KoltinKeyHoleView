@@ -109,4 +109,27 @@ class KeyHoleView(ctx : Context) : View(ctx) {
         }
     }
 
+    data class Renderer(var view : KeyHoleView) {
+
+        private val animator : Animator = Animator(view)
+
+        private val keyHole : KeyHole = KeyHole(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#212121"))
+            paint.color = Color.parseColor("#D84315")
+            keyHole.draw(canvas, paint)
+            animator.animate {
+                keyHole.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            keyHole.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
